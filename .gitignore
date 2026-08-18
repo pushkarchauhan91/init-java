@@ -1,0 +1,156 @@
+HELP.md
+target/
+~**
+.mvn/**
+.mvn/wrapper/**
+.mvn/wrapper/maven-wrapper.properties
+.mvnw
+.mvnw.cmd
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Maven ###
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+### Gradle ###
+.gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+gradlew
+gradlew.bat
+
+# Gradle cache
+**/.gradle/
+**/build/
+
+### Spring Boot ###
+*.log
+*.log.*
+logs/
+spring.log
+
+# Application properties (if sensitive)
+application-*.yml
+application-*.yaml
+application-*.properties
+
+# Profiles / env overrides
+.env
+.env.*
+*.local
+
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# JVM crash logs
+*.hprof
+
+### Testing ###
+/test-output/
+/surefire-reports/
+/failsafe-reports/
+/coverage/
+/jacoco.exec
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+### Eclipse ###
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### OS Files ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### Logs & temp ###
+*.tmp
+*.temp
+*.swp
+*.lock
+*.pid
+
+### Docker ###
+docker-compose.override.yml
+
+### Kubernetes ###
+*.kubeconfig
+
+### Misc ###
+*.orig
+*.rej
+
+# IDE-specific caches
+.cache/
+.history/
+
+# Node (if frontend inside project)
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
