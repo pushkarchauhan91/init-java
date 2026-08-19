@@ -1,0 +1,7 @@
+1. instance main method
+2. compact source file
+3. IO Helper
+4. module import
+5. flexible constructor bodies (before super i can have validation logic in child class)
+6. scoped value
+7. key derivation function API

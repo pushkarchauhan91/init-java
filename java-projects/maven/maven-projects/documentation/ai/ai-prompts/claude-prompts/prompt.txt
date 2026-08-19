@@ -1,0 +1,10 @@
+Setup a google meeting between 10 AM to 11 AM with Title
+"Discussion on upcoming design changes for Q1" for tomorrow
+and forward invite to send forward email to pchauh21@ford.com
+
+Go to Google Drive, fetch my Resume and forward email to pchauh21@ford.com do not create a draft email
+
+Mark all emails in promotions tab with "star"
+
+UnMark all emails in promotions tab with "star"
+

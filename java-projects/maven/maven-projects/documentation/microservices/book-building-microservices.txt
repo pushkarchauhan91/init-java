@@ -1,0 +1,32 @@
+microservices are an architectural choice which consist of independently deployable services
+which are modeled around a business domain.
+
+Key concepts of microservices
+1. Domain Driven Design (different services for order, payment, etc)
+1. Independently deployable
+2. Loosely coupled
+Service Boundary
+Business Functionality High Cohesion > Technical functionality
+Avoid Database Sharing in Microservices
+Microservices should be of size that it can be easily understood
+
+microservices are technology-agnostic
+microservices functionality is accesses via network endpoints
+
+SOA vs Microservices
+Monolith (single deployment) vs Microservices
+
+Three Tier Architecture
+Web UI -> Backend -> Database
+
+Limitations
+1. Highly Cohesive
+
+Catalog Service <- get the genre -> Customer <- fetch recommendations > Recommendation
+
+Monolith
+Single Process Monolith
+Modular Monolith
+Distributed Monolith
+
+Delivery Contention:

@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "ai-spring-boot-mcp-server-shopping-list": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "/Users/pushkarchauhan91/Documents/workspace_intellij/parent/maven-projects-llm/mcp-shopping-list/target/mcp-shopping-list-0.0.1-SNAPSHOT.jar"
+      ]
+    }
+  },
+  "preferences": {
+    "remoteToolsDeviceName": "pushkarchauhan91s-macbook-air-local",
+    "coworkWebSearchEnabled": true,
+    "coworkScheduledTasksEnabled": true,
+    "ccdScheduledTasksEnabled": true,
+    "epitaxyPrefs": {
+      "starred-local-code-sessions": [],
+      "starred-cowork-spaces": [],
+      "starred-session-groups": [],
+      "dframe-local-slice": {
+        "pinnedOrder": [],
+        "customGroupAssignments": {},
+        "customGroupOrder": {}
+      }
+    }
+  }
+}

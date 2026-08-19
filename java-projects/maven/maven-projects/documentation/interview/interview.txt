@@ -1,0 +1,275 @@
+--Can you tell me about yourself?
+--What are the steps to exclude certain autoconfiguration?
+--How to secure REST API end points?
+--How to scale Spring Boot applications?
+--How to improve performance in Spring Boot?
+Redis
+@Async 
+
+--How to scale Spring Boot applications?
+-- Horizontal Scaling: Adding More instances
+-- Vertical Scaling: Adding More RAM and CPU Power
+-- Break app into microservices
+-- Use GCP cloud services
+-- Use Caching
+-- Implement API Gateway: Authentication
+
+Load Balance
+Data Replication
+
+--How to modify an existing spring boot app to serverless architecture?
+
+Spring Cloud
+AWS Lambda
+
+--How to resolve circular dependency?
+
+Setter Injection
+Callback function
+
+--How improve Performace?
+Eureka and Zuul
+
+Eureka : Service registry and Service Discovery
+Zuul: API Gateway
+
+API Gateway vs Reverse Proxy vs Load Balancer
+
+--How Inheritance and Composition are different in Java?
+
+--Purpose of Exchanger Class in Java?
+If two friends have bought lunch boxes, if one arrives early then he needs to wait for other person to arrive.
+
+Java Flight recorder.
+
+--SAGA Pattern
+
+--How Spring Boot simplify dependency injection?
+--What testing strategy you recommend for testing Spring Boot Application?
+JUnit
+Integration testing
+Performance testing
+
+--How to integrate NoSQL DB to Spring Boot application?
+
+
+--Async Messaging in Spring Boot?
+Tasks can be done separately from main flow.
+Checking Inventory
+
+--If Spring Boot application is slow in production compared to development?
+Optimize SQL Queries
+
+-- Migrate a Spring Boot application from one schema to another
+Flyway
+Liquibase
+
+--What is Spring Cloud and how it uses?
+--How OOPS is helpful in Spring Boot project?
+reusability
+
+--How to handle interservice communication in microservices?
+
+Direct communication: WebClient
+Complex communication: Feign Client
+Asynchronous communication: Kafka > RabbitMQ
+
+--How to implement Caching in Spring Boot application?
+- Redis
+- Hazelcast
+
+Add cache dependency in build.gradle
+Add @EnableCaching in main Class
+Annotation: @Cachable, @CacheEvict, @CachePut, Cache Invalidate
+Cache Provider: EhCache, Hazelcast
+
+What are the best practise for versioning REST API in Spring boot application?
+URL versioning: /api/v1/products
+Header versioning: use custom header to specify version
+Media Type versioning: Version through content negotiation using Accept Header
+Parameter versioning: Version passing as Request Parameter
+
+Conditional Annotations in Spring Boot?
+@ConditionalOnJava(JavaVersion.SEVENTEEN)
+@ConditionalOnResource(resources = "classpath:config.yml")
+@ConditionalOnExpression("'${env}'.equals('prod')")
+@ConditionalOnBean(DataSource.class)
+@ConditionalOnClass(name = "com.mysql.cj.jdbc.Driver")
+@ConditionalOnProperty(name = "feature.payment.enabled", havingValue = "true")
+
+@EnableAutoConfiguration
+
+What are Spring Boot Actuator endpoints?
+- How to secure Actuator Endpoints?
+Use Https
+
+- How to optimize Spring Boot application?
+Implement caching
+Optimize SQL
+Use Asynchronous Method for operations like send email
+Load Balancer if high traffic
+Optimize time complexity of code
+Use WebFlux to handle large concurrent connections
+
+- Best practise for Transactions in Spring Boot?
+Use @Transactional
+Keep Transactions at service layer
+
+@SpringBootTest vs @MockBean
+
+Spring Boot Profile
+
+What is AOP?
+Cross Cutting concern: logging, security, manage transactions
+
+- How Spring Boot decides which server to use?
+Spring Boot by default uses Tomcat Server dependency in spring-boot-starter-web.
+If any other dependency present in classpath then it uses that.
+
+
+
+Spring Boot Embedded Servlet Container?
+
+How to store secrets?
+Hashicorp Vault and GCP Secret Manager.
+
+How to enable async operation in Spring Boot?
+@Async
+@EnableAsync
+
+Spring Security Authentication vs Autorization?
+Who am I?
+What am I permitted to do?
+
+How to exclude Spring Boot autoconfiguration?
+@SpringBootApplication(exclude = {ZipkinAutoConfiguration.class})
+
+How to handle API rate limit and failures?
+Use Circuit Breaker to manage failures
+Implement rate limiting to avoid exceeding API limit
+Add a retry mechanism with exponential backoff for temporary issues
+Use Caching to reduce number of requests.
+
+How would you externalize Spring Boot configuration?
+Use Spring Cloud Config Server
+
+Convert Monolith to microservices?
+Distributed Transactions used SAGA Pattern.
+Order -> Payment -> Inventory
+
+How to create Singleton Class in Java?
+Singleton Class are by default not thread safe use double check lock and return new static instance
+
+How Garbage Collection work in Java?
+Prevent Memory Leaks
+finalize keyword in java
+
+What methods present in Object Class?
+
+Which algorithm used for Garbage collection?
+Mark and Sweep technique
+Mark and Compact
+Copying Algorithm : Yound Generation and Old Generation
+
+How Memory Leaks happen even when we have Garbage Collection in Java?
+
+Yound Generation and Old Generation memory Space
+How to ensure code quality and maintainability of your code?
+
+Spring Boot scenario based questions?
+
+You store 1 Million records in HashMap and performance drops?
+Check collisions
+Switch to ConcurrentHashMap
+Default Load Factor 0.75
+2 keys have same hashcode()
+Bucket convert into a red black tree
+
+Large Data Set 1 Billion records?
+Sequential Stream or Parallel Stream?
+What are the drawbacks
+What Thread pool paralle stream use? Fork join Pool.
+
+for loop better than list.stream().filter().map().forEach() if list size is 10k or more.
+
+When will volatile keyword fail?
+
+Any scenario for Dead lock can happen in production?
+How to detect a deadlock in production?
+
+
+
+why field injection is bad?
+
+A -> B -> C (slow)
+How to fix this?
+Use messaging Queue
+Use Circuit Breaker in Service C for fault tolerance.
+
+Why Lazy Loading is default for one to many Annotation?
+What is N+1 problem?
+
+Data replicas
+Sharding
+
+
+
+PUT vs PATCH
+
+Longest Repeating Character Replacement (Leetcode 424)
+Subarray Sum Equals K (Leetcode 560)
+Binary Tree Zigzay Level Order Traversal (LeetCode 103)
+Kth Smallest Element in a BST (LeetCode 230)
+Reverse Linked List (LeetCode 206)
+Word Break (LeetCode 139)
+Valid Parentheses (LeetCode 20)
+Longest Increasing Subsequence (LeetCode 300)
+Minimum Add to Make Parentheses Valid (LeetCode 921)
+
+20 Interview questions
+- Can we override a private method in Java? No override
+- Can we override a static method in Java? No override but method hiding
+- How to get list of all beans in Spring Boot?
+applicationContext.getBeanDefinitionNames()
+- optimistic vs pessimistic locking
+read heavy: optimistic, conflicts are rare . version based 0 1
+write heavy: pessimistic lock, conflicts are frequent.
+
+Clients: Banking, Insurance, Ecommerce 4 Years Cloud Azure,
+
+Banking, B2B, 
+o p I
+
+Diff Microservices, Event Based Mechanism, Azure Service Bus, : Topic Place event reverse the first step.
+
+@Transactional annotation?
+
+API Gateway vs Reverse Proxy vs Load Balancer
+Single entry point
+
+No Single Instance is overloaded : Route to Round Robin algorithm.
+
+K8S Scaling: What separate DevOps, 
+Resource Utilization
+Blue Green Deployment
+
+Increase RAM, Storage
+
+Sharding: 
+
+Order Payment Inventory
+@Transactional
+API Gateway vs Reverse Proxy vs Load Balancer
+Scaling
+Performace issues
+Sharding: Key based routing 
+Optimistic vs pessimistic Locking: T1 updates and T2 also updates.
+
+Java 17
+Spring 3.x
+DB Synchronous and Asynchronous depend on Salesforce.
+
+qualified additional info
+order migration
+
+local:
