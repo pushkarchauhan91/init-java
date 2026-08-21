@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">Product Catalog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --app-primary: #4f46e5;
+            --app-primary-dark: #3730a3;
+            --app-bg: #f5f7fb;
+            --app-border: #e7eaf0;
+            --app-text: #172033;
+            --app-muted: #6b7280;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 10% 0%, rgba(79, 70, 229, .08), transparent 28%),
+                var(--app-bg);
+            color: var(--app-text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", sans-serif;
+            min-height: 100vh;
+        }
+
+        .app-navbar {
+            background: linear-gradient(135deg, #111827, #1f2937 60%, #312e81);
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,.12);
+            color: #fff;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            border: 1px solid var(--app-border);
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 12px 35px rgba(31, 41, 55, .06);
+        }
+
+        .eyebrow {
+            color: var(--app-primary);
+            font-size: .78rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            letter-spacing: -.035em;
+        }
+
+        .stat-card {
+            background: #fff;
+            border: 1px solid var(--app-border);
+            border-radius: 18px;
+            padding: 18px;
+            height: 100%;
+            box-shadow: 0 8px 24px rgba(31, 41, 55, .045);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: #eef2ff;
+            color: var(--app-primary);
+            font-size: 1.2rem;
+        }
+
+        .toolbar {
+            background: #fff;
+            border: 1px solid var(--app-border);
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(31, 41, 55, .045);
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-wrap .bi-search {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            z-index: 2;
+        }
+
+        .search-wrap input {
+            padding-left: 46px;
+            border-radius: 12px;
+            min-height: 46px;
+        }
+
+        .form-select {
+            border-radius: 12px;
+            min-height: 46px;
+        }
+
+        .products-card {
+            background: #fff;
+            border: 1px solid var(--app-border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(31, 41, 55, .06);
+        }
+
+        .products-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--app-border);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            background: #f8fafc;
+            color: #64748b;
+            border-bottom: 1px solid var(--app-border);
+            font-size: .76rem;
+            font-weight: 800;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            padding: 15px 18px;
+            white-space: nowrap;
+        }
+
+        .table tbody td {
+            padding: 17px 18px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .table tbody tr {
+            transition: background .18s ease, transform .18s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #fafbff;
+        }
+
+        .product-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            color: var(--app-primary);
+            font-weight: 800;
+            flex: 0 0 auto;
+        }
+
+        .category-badge {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            font-weight: 600;
+        }
+
+        .product-description {
+            min-width: 280px;
+            max-width: 480px;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            line-height: 1.45;
+        }
+
+        .price {
+            font-weight: 800;
+            color: #15803d;
+            white-space: nowrap;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-state {
+            padding: 70px 20px !important;
+        }
+
+        .empty-icon {
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            color: #94a3b8;
+            font-size: 1.8rem;
+        }
+
+        .loading-bar {
+            height: 12px;
+            border-radius: 999px;
+        }
+
+        .footer {
+            color: var(--app-muted);
+            font-size: .85rem;
+        }
+
+        .pagination {
+            gap: 5px;
+        }
+
+        .pagination .page-item {
+            margin: 0;
+        }
+
+        .pagination .page-link {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px !important;
+            min-width: 40px;
+            height: 40px;
+            padding: 0 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: #475569;
+            font-weight: 600;
+            box-shadow: none;
+            transition: all .15s ease;
+        }
+
+        .pagination .page-link:hover:not(:disabled) {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #1e293b;
+        }
+
+        /* Current page: subtle neutral highlight instead of a bright blue box */
+        .pagination .page-item.active .page-link {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #111827;
+            font-weight: 800;
+            box-shadow: inset 0 -2px 0 #64748b;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            background: #f8fafc;
+            color: #cbd5e1;
+            border-color: #e5e7eb;
+        }
+
+        .btn-primary {
+            --bs-btn-bg: var(--app-primary);
+            --bs-btn-border-color: var(--app-primary);
+            --bs-btn-hover-bg: var(--app-primary-dark);
+            --bs-btn-hover-border-color: var(--app-primary-dark);
+        }
+
+        @media (max-width: 767.98px) {
+            .hero {
+                padding: 22px;
+                border-radius: 18px;
+            }
+
+            .hero-actions {
+                width: 100%;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .products-header {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark app-navbar py-3">
+    <div class="container-xxl">
+        <a class="navbar-brand d-flex align-items-center gap-3 fw-bold" href="#">
+            <span class="brand-icon">
+                <i class="bi bi-box-seam"></i>
+            </span>
+            <span>Product Service</span>
+        </a>
+
+        <div class="d-none d-md-flex align-items-center gap-2 text-white-50 small">
+            <span class="rounded-circle bg-success"
+                  style="width:8px;height:8px;"></span>
+            Live inventory
+        </div>
+    </div>
+</nav>
+
+<main class="container-xxl py-4 py-lg-5">
+
+    <!-- Hero -->
+    <section class="hero mb-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <div class="eyebrow mb-2">
+                    <i class="bi bi-grid-1x2-fill me-1"></i> Inventory Dashboard
+                </div>
+                <h1 class="display-6 fw-bold mb-2">
+                    <span th:text="${pageTitle}">Product Catalog</span>
+                </h1>
+                <p class="text-secondary mb-0">
+                    Manage your product inventory with a clean, fast and responsive dashboard.
+                </p>
+            </div>
+
+            <div class="col-lg-4 hero-actions d-flex justify-content-lg-end">
+                <a class="btn btn-primary btn-lg px-4 shadow-sm"
+                   th:href="@{/ui/products/new}">
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Add Product
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center gap-3">
+                <div class="stat-icon"><i class="bi bi-boxes"></i></div>
+                <div>
+                    <div class="text-secondary small">Products on page</div>
+                    <div class="fs-4 fw-bold">
+                        <span th:text="${#lists.size(products)}">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center gap-3">
+                <div class="stat-icon"><i class="bi bi-layers"></i></div>
+                <div>
+                    <div class="text-secondary small">Current page</div>
+                    <div class="fs-4 fw-bold">
+                        <span id="currentPageDisplay">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-card d-flex align-items-center gap-3">
+                <div class="stat-icon"><i class="bi bi-broadcast-pin"></i></div>
+                <div>
+                    <div class="text-secondary small">Sync status</div>
+                    <div class="fs-6 fw-bold text-success"
+                         data-bs-toggle="tooltip"
+                         title="Indicates that the dashboard can communicate with the Product Service API.">
+                        <i class="bi bi-check-circle-fill me-1"></i> Connected
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search / Filters -->
+    <section class="toolbar p-3 p-lg-4 mb-4">
+        <div class="row g-3 align-items-end">
+            <div class="col-lg-7">
+                <label for="searchInput" class="form-label fw-semibold">
+                    Search products
+                </label>
+                <div class="search-wrap">
+                    <i class="bi bi-search"></i>
+                    <input type="search"
+                           id="searchInput"
+                           class="form-control"
+                           placeholder="Search by name, description or category..."
+                           autocomplete="off">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <label for="size" class="form-label fw-semibold">
+                    Items per page
+                </label>
+                <form th:action="@{/ui/products}" method="get">
+                    <select id="size"
+                            name="size"
+                            class="form-select"
+                            onchange="this.form.submit()">
+                        <option th:value="5" th:selected="${pageSize == 5}">5 items</option>
+                        <option th:value="10" th:selected="${pageSize == 10}">10 items</option>
+                        <option th:value="20" th:selected="${pageSize == 20}">20 items</option>
+                        <option th:value="50" th:selected="${pageSize == 50}">50 items</option>
+                    </select>
+            </div>
+
+            <div class="col-sm-6 col-lg-2">
+                <div class="text-secondary small mb-2">Showing</div>
+                <div class="fw-bold fs-5">
+                    <span id="visibleCount" th:text="${#lists.size(products)}">0</span>
+                    <span class="text-secondary fw-normal fs-6"> products</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products-card">
+        <div class="products-header d-flex justify-content-between align-items-center gap-3">
+            <div>
+                <h2 class="h5 fw-bold mb-1">
+                    <i class="bi bi-table me-2 text-primary"></i>Products
+                </h2>
+                <div class="small text-secondary">
+                    Your latest product inventory
+                </div>
+            </div>
+
+            <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                <i class="bi bi-arrow-repeat me-1"></i>
+                Auto refresh
+            </span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                <tr>
+                    <th class="ps-4">ID</th>
+                    <th>Product</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th class="text-end">Price</th>
+                    <th class="text-center pe-4">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody id="productsBody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Client-side pagination -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
+        <div class="footer" id="paginationInfo">
+            <i class="bi bi-info-circle me-1"></i>
+            Showing 0 products
+        </div>
+
+        <nav aria-label="Product pagination">
+            <ul class="pagination mb-0" id="paginationControls"></ul>
+        </nav>
+    </div>
+
+    <div class="footer text-center mt-5">
+        Product Service Dashboard · Real-time inventory view
+    </div>
+</main>
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-exclamation-triangle text-danger me-2"></i>
+                    Delete product?
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-secondary">
+                This action cannot be undone. Are you sure you want to remove this product?
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                    <i class="bi bi-trash3 me-1"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="appToast" class="toast border-0 shadow" role="alert">
+        <div class="toast-body d-flex align-items-center gap-2">
+            <i id="toastIcon" class="bi bi-check-circle-fill text-success"></i>
+            <span id="toastMessage">Done</span>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const apiBase = '/products';
+    let allProducts = [];
+    let visibleProducts = [];
+    let productToDelete = null;
+    let currentPage = 0;
+    let pageSize = Number(document.getElementById('size')?.value) || 10;
+
+    const productsBody = document.getElementById('productsBody');
+    const searchInput = document.getElementById('searchInput');
+    const visibleCount = document.getElementById('visibleCount');
+    const paginationInfo = document.getElementById('paginationInfo');
+    const paginationControls = document.getElementById('paginationControls');
+    const currentPageDisplay = document.getElementById('currentPageDisplay');
+
+    const deleteModalElement = document.getElementById('deleteModal');
+    const deleteModal = new bootstrap.Modal(deleteModalElement);
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+    const appToast = new bootstrap.Toast(document.getElementById('appToast'), {
+        delay: 2500
+    });
+
+    function debounce(fn, delay = 250) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn(...args), delay);
+        };
+    }
+
+    function escapeHtml(value) {
+        if (value == null) return '';
+        return String(value).replace(/[&<>"'`]/g, c => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '`': '&#96;'
+        })[c]);
+    }
+
+    function formatPrice(amount) {
+        return '$' + Number(amount || 0).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    function productInitial(name) {
+        return escapeHtml((name || 'P').trim().charAt(0).toUpperCase());
+    }
+
+    function showToast(message, success = true) {
+        const icon = document.getElementById('toastIcon');
+        document.getElementById('toastMessage').textContent = message;
+        icon.className = success
+            ? 'bi bi-check-circle-fill text-success'
+            : 'bi bi-exclamation-circle-fill text-danger';
+        appToast.show();
+    }
+
+    function renderLoading(count = 6) {
+        productsBody.innerHTML = '';
+
+        for (let i = 0; i < count; i++) {
+            const tr = document.createElement('tr');
+
+            tr.innerHTML = `
+                <td class="ps-4">
+                    <span class="placeholder-glow">
+                        <span class="placeholder col-6 loading-bar"></span>
+                    </span>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="placeholder rounded-3" style="width:42px;height:42px;"></span>
+                        <span class="placeholder-glow flex-grow-1">
+                            <span class="placeholder col-7 loading-bar"></span>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <span class="placeholder-glow">
+                        <span class="placeholder col-10 loading-bar"></span>
+                    </span>
+                </td>
+                <td>
+                    <span class="placeholder-glow">
+                        <span class="placeholder col-7 loading-bar"></span>
+                    </span>
+                </td>
+                <td class="text-end">
+                    <span class="placeholder-glow">
+                        <span class="placeholder col-6 loading-bar"></span>
+                    </span>
+                </td>
+                <td class="text-center pe-4">
+                    <span class="placeholder-glow">
+                        <span class="placeholder col-6 loading-bar"></span>
+                    </span>
+                </td>
+            `;
+
+            productsBody.appendChild(tr);
+        }
+    }
+
+    function renderProducts(products) {
+        productsBody.innerHTML = '';
+
+        if (!products || products.length === 0) {
+            productsBody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="empty-state text-center">
+                        <div class="empty-icon">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">No products found</h5>
+                        <p class="text-secondary mb-0">
+                            Try a different search term or add a new product.
+                        </p>
+                    </td>
+                </tr>`;
+
+            visibleCount.textContent = '0';
+            return;
+        }
+
+        visibleCount.textContent = visibleProducts.length;
+
+        const fragment = document.createDocumentFragment();
+
+        products.forEach(product => {
+            const tr = document.createElement('tr');
+            tr.dataset.id = product.id;
+
+            tr.innerHTML = `
+                <td class="ps-4">
+                    <span class="fw-bold text-secondary">#${escapeHtml(product.id)}</span>
+                </td>
+
+                <td>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="product-avatar">
+                            ${productInitial(product.name)}
+                        </div>
+                        <div class="min-w-0">
+                            <div class="fw-bold text-dark">
+                                ${escapeHtml(product.name)}
+                            </div>
+                            <div class="small text-secondary">
+                                Product #${escapeHtml(product.id)}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <span class="text-secondary d-block product-description"
+                          title="${escapeHtml(product.description || '')}">
+                        ${escapeHtml(product.description || 'No description')}
+                    </span>
+                </td>
+
+                <td>
+                    <span class="badge category-badge rounded-pill px-3 py-2">
+                        <i class="bi bi-folder2-open me-1"></i>
+                        ${escapeHtml(product.category || 'Uncategorized')}
+                    </span>
+                </td>
+
+                <td class="text-end">
+                    <span class="price">${formatPrice(product.price)}</span>
+                </td>
+
+                <td class="text-center pe-4">
+                    <div class="d-flex justify-content-center gap-2">
+                        <a class="btn btn-outline-primary action-btn"
+                           href="/ui/products/edit/${encodeURIComponent(product.id)}"
+                           data-bs-toggle="tooltip"
+                           title="Edit product"
+                           aria-label="Edit product">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+
+                        <button class="btn btn-outline-danger action-btn delete-btn"
+                                type="button"
+                                data-id="${escapeHtml(product.id)}"
+                                data-bs-toggle="tooltip"
+                                title="Delete product"
+                                aria-label="Delete product">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+
+            fragment.appendChild(tr);
+        });
+
+        productsBody.appendChild(fragment);
+        initializeTooltips();
+    }
+
+    function renderPagination() {
+        const total = visibleProducts.length;
+        const totalPages = Math.ceil(total / pageSize);
+
+        paginationControls.innerHTML = '';
+
+        if (total === 0) {
+            currentPageDisplay.textContent = '1';
+            paginationInfo.innerHTML =
+                '<i class="bi bi-info-circle me-1"></i> Showing 0 products';
+            return;
+        }
+
+        // Keep current page valid after searching/deleting.
+        if (currentPage >= totalPages) {
+            currentPage = Math.max(0, totalPages - 1);
+        }
+
+        const start = currentPage * pageSize;
+        const end = Math.min(start + pageSize, total);
+
+        currentPageDisplay.textContent = currentPage + 1;
+
+        paginationInfo.innerHTML =
+            `<i class="bi bi-info-circle me-1"></i>
+             Showing <strong>${start + 1}-${end}</strong> of <strong>${total}</strong> products`;
+
+        function addPageItem(label, page, disabled = false, active = false) {
+            const li = document.createElement('li');
+            li.className = `page-item${disabled ? ' disabled' : ''}${active ? ' active' : ''}`;
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'page-link';
+            button.innerHTML = label;
+            button.disabled = disabled;
+
+            if (!disabled) {
+                button.addEventListener('click', () => {
+                    currentPage = page;
+                    renderCurrentPage();
+                    window.scrollTo({ top: productsBody.closest('.products-card').offsetTop - 20, behavior: 'smooth' });
+                });
+            }
+
+            li.appendChild(button);
+            paginationControls.appendChild(li);
+        }
+
+        addPageItem('<i class="bi bi-chevron-left"></i>', currentPage - 1, currentPage === 0);
+
+        // Show a compact page range for large result sets.
+        const pages = [];
+        const maxVisible = 5;
+
+        if (totalPages <= maxVisible + 2) {
+            for (let i = 0; i < totalPages; i++) pages.push(i);
+        } else {
+            pages.push(0);
+
+            const rangeStart = Math.max(1, currentPage - 1);
+            const rangeEnd = Math.min(totalPages - 2, currentPage + 1);
+
+            if (rangeStart > 1) pages.push('...');
+
+            for (let i = rangeStart; i <= rangeEnd; i++) pages.push(i);
+
+            if (rangeEnd < totalPages - 2) pages.push('...');
+
+            pages.push(totalPages - 1);
+        }
+
+        pages.forEach(page => {
+            if (page === '...') {
+                const li = document.createElement('li');
+                li.className = 'page-item disabled';
+                li.innerHTML = '<span class="page-link">…</span>';
+                paginationControls.appendChild(li);
+            } else {
+                addPageItem(String(page + 1), page, false, page === currentPage);
+            }
+        });
+
+        addPageItem('<i class="bi bi-chevron-right"></i>',
+            currentPage + 1,
+            currentPage >= totalPages - 1);
+    }
+
+    function renderCurrentPage() {
+        const start = currentPage * pageSize;
+        const end = start + pageSize;
+
+        renderProducts(visibleProducts.slice(start, end));
+        renderPagination();
+    }
+
+    function changePageSize(value) {
+        pageSize = Number(value) || 10;
+
+        // Changing the page size should start from page 1.
+        currentPage = 0;
+
+        renderCurrentPage();
+    }
+
+    function applySearch(resetPage = true) {
+        const term = searchInput.value.trim().toLowerCase();
+
+        visibleProducts = term
+            ? filterProducts(term)
+            : [...allProducts];
+
+        if (resetPage) {
+            currentPage = 0;
+        }
+
+        renderCurrentPage();
+    }
+
+    function initializeTooltips() {
+        document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+            bootstrap.Tooltip.getOrCreateInstance(el);
+        });
+    }
+
+    async function deleteProduct(id) {
+        confirmDeleteBtn.disabled = true;
+
+        try {
+            const response = await fetch(`${apiBase}/${encodeURIComponent(id)}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) {
+                throw new Error('Delete failed');
+            }
+
+            allProducts = allProducts.filter(
+                product => String(product.id) !== String(id)
+            );
+
+            applySearch(false);
+
+            deleteModal.hide();
+            showToast('Product deleted successfully.');
+
+        } catch (error) {
+            console.error(error);
+            showToast('Unable to delete the product.', false);
+        } finally {
+            confirmDeleteBtn.disabled = false;
+            productToDelete = null;
+        }
+    }
+
+    function filterProducts(term) {
+        return allProducts.filter(product =>
+            (product.name && product.name.toLowerCase().includes(term)) ||
+            (product.description && product.description.toLowerCase().includes(term)) ||
+            (product.category && product.category.toLowerCase().includes(term))
+        );
+    }
+
+    async function fetchProducts() {
+        renderLoading();
+
+        try {
+            const response = await fetch(apiBase, {
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch products');
+            }
+
+            const data = await response.json();
+            allProducts = Array.isArray(data) ? data : [];
+
+            applySearch(false);
+
+        } catch (error) {
+            console.error(error);
+
+            productsBody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="empty-state text-center">
+                        <div class="empty-icon text-danger bg-danger-subtle">
+                            <i class="bi bi-wifi-off"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Unable to load products</h5>
+                        <p class="text-secondary mb-3">
+                            Please check the Product Service and try again.
+                        </p>
+                        <button class="btn btn-primary btn-sm" onclick="fetchProducts()">
+                            <i class="bi bi-arrow-clockwise me-1"></i> Retry
+                        </button>
+                    </td>
+                </tr>`;
+
+            visibleCount.textContent = '0';
+        }
+    }
+
+    const doSearch = debounce(() => {
+        applySearch(true);
+    }, 200);
+
+    searchInput.addEventListener('input', doSearch);
+
+    productsBody.addEventListener('click', event => {
+        const deleteButton = event.target.closest('.delete-btn');
+
+        if (!deleteButton) return;
+
+        productToDelete = deleteButton.dataset.id;
+        deleteModal.show();
+    });
+
+    confirmDeleteBtn.addEventListener('click', () => {
+        if (productToDelete != null) {
+            deleteProduct(productToDelete);
+        }
+    });
+
+    // Initialize static Bootstrap tooltips.
+    initializeTooltips();
+
+    // Refresh every 20 seconds while preserving the current search and page.
+    setInterval(fetchProducts, 20000);
+
+    fetchProducts();
+</script>
+
+</body>
+</html>

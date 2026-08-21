@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.company</groupId>
-        <artifactId>youtube</artifactId>
+        <artifactId>maven-aggregator</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>author-javatechie</artifactId>
+    <artifactId>practise</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>jt-bootui</module>
+        <module>practise-core-java</module>
     </modules>
 
     <properties>
