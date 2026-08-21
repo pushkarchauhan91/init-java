@@ -1,0 +1,5 @@
+A slightly more interview-focused ranking:
+
+Easy: Bubble, Selection, Insertion
+Medium: Merge, Quick, Heap
+Hard: Counting, Radix, Bucket, Tim Sort
